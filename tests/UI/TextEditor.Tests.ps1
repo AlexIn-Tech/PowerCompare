@@ -48,3 +48,13 @@ Describe 'Text editor behavior' {
         }
     }
 }
+Describe 'Editor data-preservation regressions' {
+    It 'marks canonically equivalent but ordinally different Unicode as dirty' {
+        Test-PCTextEditorDirty "caf$([char]0xE9)" "cafe$([char]0x301)" | Should -BeTrue
+        Test-PCTextEditorDirty 'same' 'same' | Should -BeFalse
+    }
+    It 'derives the save policy from initial merge output before control normalization' {
+        Get-PCEditorNewlineStyle "A`r`nb`n" | Should -Be 'Mixed'
+        { ConvertTo-PCEditorSaveText "A`r`nb`r`n" (Get-PCEditorNewlineStyle "A`r`nb`n") Preserve } | Should -Throw '*mixed*'
+    }
+}

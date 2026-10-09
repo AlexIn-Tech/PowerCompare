@@ -90,3 +90,57 @@ Describe 'Merge input guards' {
         [IO.File]::ReadAllText($outputPath) | Should -Be 'old'
     }
 }
+Describe 'Save commit concurrency' {
+    It 'protects the destination while staged content is hashed' {
+        InModuleScope PowerCompare.Core -Parameters @{Fixture=$TestDrive} {
+            param($Fixture)
+            $path=Join-Path $Fixture 'race.txt';[IO.File]::WriteAllText($path,'original')
+            $session=Get-PCTextEditSession $path;$plan=Get-PCTextEditPlan $path 'planned' $session.Identity
+            $script:raceAttempted=$false;$script:racePath=$path;$script:actualIdentity=${function:Get-PCFileIdentity}
+            Mock Get-PCFileIdentity {
+                param($Path,$CancellationToken)
+                if([IO.Path]::GetFileName($Path) -like '.powercompare-*.tmp'){
+                    $script:raceAttempted=$true
+                    [IO.File]::WriteAllText($script:racePath,'concurrent')
+                }
+                & $script:actualIdentity $Path $CancellationToken
+            }
+            {Invoke-PCTextEditPlan $plan -Confirm:$false} | Should -Throw
+            $script:raceAttempted | Should -BeTrue
+            [IO.File]::ReadAllText($path) | Should -Be 'original'
+            @(Get-ChildItem $Fixture -Filter '.powercompare-*').Count | Should -Be 0
+        }
+    }
+}
+Describe 'Encoded document size consistency' {
+    It 'rejects an encoded document whose BOM pushes it beyond the reader limit' {
+        $path=Join-Path $TestDrive 'limit.txt';[IO.File]::WriteAllText($path,'original');$session=Get-PCTextEditSession $path
+        {Get-PCTextEditPlan $path ('a'*2097152) $session.Identity -HasBom $true} | Should -Throw '*limit*'
+        [IO.File]::ReadAllText($path) | Should -Be 'original'
+    }
+}
+Describe 'Concurrent namespace replacement recovery' {
+    It 'restores an unexpected replacement and retains rejected proposed bytes' {
+        InModuleScope PowerCompare.Core -Parameters @{Fixture=$TestDrive} {
+            param($Fixture)
+            $path=Join-Path $Fixture 'rename-race.txt';$external=Join-Path $Fixture 'external.txt';$aside=Join-Path $Fixture 'original-aside.txt'
+            [IO.File]::WriteAllText($path,'original');[IO.File]::WriteAllText($external,'concurrent')
+            $session=Get-PCTextEditSession $path;$plan=Get-PCTextEditPlan $path 'planned' $session.Identity
+            $script:renamePath=$path;$script:externalPath=$external;$script:asidePath=$aside;$script:checks=0;$script:saveIdentity=${function:Get-PCTextSaveIdentity}
+            Mock Get-PCTextSaveIdentity {
+                param($Path,$Locks,$CancellationToken)
+                $identity=& $script:saveIdentity $Path $Locks $CancellationToken
+                if($Path -eq $script:renamePath){
+                    $script:checks++
+                    if($script:checks -eq 2){[IO.File]::Move($Path,$script:asidePath);[IO.File]::Move($script:externalPath,$Path)}
+                }
+                $identity
+            }
+            {Invoke-PCTextEditPlan $plan -Confirm:$false} | Should -Throw '*external content restored*'
+            [IO.File]::ReadAllText($path) | Should -Be 'concurrent'
+            $rejected=@(Get-ChildItem $Fixture -Filter 'rename-race.txt.powercompare-rejected-*')
+            $rejected.Count | Should -Be 1
+            [IO.File]::ReadAllText($rejected[0].FullName) | Should -Be 'planned'
+        }
+    }
+}

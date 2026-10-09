@@ -105,7 +105,16 @@ Describe 'Windows editable text integration' {
                 if($box.Text -cne $original){throw 'Undo did not restore text.'}
                 $window.FindName('RedoEdit').RaiseEvent([Windows.RoutedEventArgs]::new([Windows.Controls.Button]::ClickEvent))
                 if(-not $box.Text.EndsWith('changed')){throw 'Redo did not restore edit.'}
-                $box.Undo();$window.Close()
+                $box.Undo()
+                $window.FindName('WrapEdit').IsChecked=$true
+                $window.FindName('WrapEdit').RaiseEvent([Windows.RoutedEventArgs]::new([Windows.Controls.Primitives.ButtonBase]::ClickEvent))
+                if($box.TextWrapping -ne [Windows.TextWrapping]::Wrap){throw 'Wrapping toggle failed.'}
+                $window.Close()
+                $session=Get-PCTextEditSession $path
+                $mixed=New-PCTextEditorWindow -Path $path -Session $session -InitialText "ONE`r`ntwo`n"
+                if($mixed.Tag.EditNewline -ne 'Mixed'){throw 'Mixed merge delimiters were not retained in save policy.'}
+                $mixed.FindName('EditorText').Text=$mixed.Tag.OriginalEditorText
+                $mixed.Close()
                 if([IO.File]::ReadAllText($path) -cne "one`ntwo`n"){throw 'Unsaved editing changed disk.'}
                 foreach($name in 'TextMerge'){
                     $reader=[Xml.XmlReader]::Create((Join-Path $Repo "src/PowerCompare.UI/$name.xaml"));try{$view=[Windows.Markup.XamlReader]::Load($reader)}finally{$reader.Dispose()};$view.Close()
