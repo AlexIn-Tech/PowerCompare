@@ -1,18 +1,25 @@
 name: PowerShell validation
 on:
-  push:
-  pull_request:
   workflow_dispatch:
+    inputs:
+      shell:
+        description: PowerShell runtime to validate
+        type: choice
+        options:
+          - pwsh
+          - powershell
+        default: pwsh
+        required: true
+concurrency:
+  group: validation-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   windows:
     runs-on: windows-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        shell: [powershell, pwsh]
+    timeout-minutes: 15
     defaults:
       run:
-        shell: ${{ matrix.shell }}
+        shell: ${{ inputs.shell }}
     steps:
       - uses: actions/checkout@v4
       - name: Install pinned test dependencies
@@ -27,5 +34,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: results-${{ matrix.shell }}
+          name: results-${{ inputs.shell }}
           path: TestResults/

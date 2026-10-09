@@ -58,13 +58,19 @@ try { & $Launcher } finally { $timer.Stop() }
 if(-not $state.Verified){throw 'Launcher interaction was not verified.'}
 '@
         [IO.File]::WriteAllText($wrapper,$code,[Text.UTF8Encoding]::new($true))
-        $stdout=Join-Path $TestDrive 'launcher.out';$stderr=Join-Path $TestDrive 'launcher.err'
         $engine=(Get-Process -Id $PID).Path
         $arguments='-NoProfile -STA -File "'+$wrapper+'" -Launcher "'+$launcher+'" -Fixture "'+$TestDrive+'"'
-        $process=Start-Process -FilePath $engine -ArgumentList $arguments -PassThru -RedirectStandardOutput $stdout -RedirectStandardError $stderr
+        $process=[Diagnostics.Process]::new()
+        $process.StartInfo=[Diagnostics.ProcessStartInfo]::new($engine,$arguments)
+        $process.StartInfo.UseShellExecute=$false
+        $process.StartInfo.RedirectStandardOutput=$true
+        $process.StartInfo.RedirectStandardError=$true
         try{
+            [void]$process.Start()
+            $outputTask=$process.StandardOutput.ReadToEndAsync();$errorTask=$process.StandardError.ReadToEndAsync()
             if(-not $process.WaitForExit(45000)){$process.Kill();throw 'Launcher UI regression timed out.'}
-            if($process.ExitCode -ne 0){throw ([IO.File]::ReadAllText($stderr))}
+            $stdout=$outputTask.GetAwaiter().GetResult();$stderr=$errorTask.GetAwaiter().GetResult()
+            if($process.ExitCode -ne 0){throw "Launcher exited $($process.ExitCode). Standard error: $stderr Standard output: $stdout"}
             $process.ExitCode | Should -Be 0
         }finally{$process.Dispose()}
     }
