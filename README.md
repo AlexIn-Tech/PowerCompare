@@ -13,7 +13,7 @@ PowerCompare is being refactored into a Windows WPF comparison application with 
 - Saved local sessions and JSON, CSV, and escaped HTML reports.
 - A headless JSON comparison command and a Pester TDD suite.
 
-WPF interaction and Windows PowerShell 5.1 compatibility require Windows validation; Linux engine results alone do not establish desktop readiness. Merge, remote/cloud protocols, archives, specialized viewers, and remaining parity features are tracked as outstanding.
+Windows CI passes on Windows PowerShell 5.1 and PowerShell 7, including WPF loading and repeated Compare events. Interactive desktop acceptance remains open; see [validation evidence](docs/validation.md). Merge, remote/cloud protocols, archives, specialized viewers, and remaining parity features are tracked as outstanding.
 
 ## Run on Windows
 
