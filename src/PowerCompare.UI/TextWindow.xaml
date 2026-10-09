@@ -6,6 +6,9 @@
       <StackPanel Orientation="Horizontal" Margin="0,12,0,8">
         <Button x:Name="PreviousDifference" Content="← Previous difference" Padding="12,6" Margin="0,0,8,0"/>
         <Button x:Name="NextDifference" Content="Next difference →" Padding="12,6"/>
+        <Button x:Name="EditLeftText" Content="Edit left…" Padding="12,6" Margin="8,0,0,0"/>
+        <Button x:Name="EditRightText" Content="Edit right…" Padding="12,6" Margin="8,0,0,0"/>
+        <Button x:Name="MergeText" Content="Three-way merge…" Padding="12,6" Margin="8,0,0,0"/>
         <Button x:Name="CancelText" Content="Cancel" Padding="12,6" Margin="8,0,0,0"/>
       </StackPanel>
       <TextBlock x:Name="TextSummary" Text="Loading comparison…" Foreground="#52647F" TextWrapping="Wrap"/>

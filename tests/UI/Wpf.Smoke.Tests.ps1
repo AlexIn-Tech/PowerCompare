@@ -77,3 +77,51 @@ Describe 'Windows WPF controller integration' {
         } finally {$ps.Dispose();$runspace.Dispose()}
     }
 }
+Describe 'Windows editable text integration' {
+    It 'loads text, dispatches editing, undo and redo, and closes a clean editor' {
+        if (-not $onWindows) { Set-ItResult -Skipped -Because 'WPF requires Windows';return }
+        $repo=Join-Path $PSScriptRoot '../..'
+        $ps=[PowerShell]::Create();$runspace=[RunspaceFactory]::CreateRunspace()
+        $runspace.ApartmentState='STA';$runspace.ThreadOptions='ReuseThread';$runspace.Open();$ps.Runspace=$runspace
+        try {
+            [void]$ps.AddScript({
+                param($Repo,$Fixture)
+                $ErrorActionPreference='Stop';Add-Type -AssemblyName PresentationFramework
+                Import-Module (Join-Path $Repo 'src/PowerCompare.Core/PowerCompare.Core.psd1') -Force
+                foreach($name in 'Workers','TextEditor'){. (Join-Path $Repo "src/PowerCompare.UI/$name.ps1")}
+                $path=Join-Path $Fixture 'editor.txt';[IO.File]::WriteAllText($path,"one`ntwo`n")
+                $window=New-PCTextEditorWindow -Path $path
+                $window.Show()
+                $clock=[Diagnostics.Stopwatch]::StartNew()
+                while(-not $window.Tag.Session -and $clock.Elapsed.TotalSeconds -lt 15){
+                    $frame=[Windows.Threading.DispatcherFrame]::new();$pump=[Windows.Threading.DispatcherTimer]::new();$pump.Interval=[timespan]::FromMilliseconds(20)
+                    $pump.Add_Tick({$frame.Continue=$false;$pump.Stop()}.GetNewClosure());$pump.Start();[Windows.Threading.Dispatcher]::PushFrame($frame)
+                }
+                if(-not $window.Tag.Session){throw 'Editor session did not load.'}
+                $box=$window.FindName('EditorText');$original=$box.Text
+                $box.CaretIndex=$box.Text.Length;$box.SelectedText='changed'
+                if(-not $box.CanUndo){throw 'Edit cannot be undone.'}
+                $window.FindName('UndoEdit').RaiseEvent([Windows.RoutedEventArgs]::new([Windows.Controls.Button]::ClickEvent))
+                if($box.Text -cne $original){throw 'Undo did not restore text.'}
+                $window.FindName('RedoEdit').RaiseEvent([Windows.RoutedEventArgs]::new([Windows.Controls.Button]::ClickEvent))
+                if(-not $box.Text.EndsWith('changed')){throw 'Redo did not restore edit.'}
+                $box.Undo()
+                $window.FindName('WrapEdit').IsChecked=$true
+                $window.FindName('WrapEdit').RaiseEvent([Windows.RoutedEventArgs]::new([Windows.Controls.Primitives.ButtonBase]::ClickEvent))
+                if($box.TextWrapping -ne [Windows.TextWrapping]::Wrap){throw 'Wrapping toggle failed.'}
+                $window.Close()
+                $session=Get-PCTextEditSession $path
+                $mixed=New-PCTextEditorWindow -Path $path -Session $session -InitialText "ONE`r`ntwo`n"
+                if($mixed.Tag.EditNewline -ne 'Mixed'){throw 'Mixed merge delimiters were not retained in save policy.'}
+                $mixed.FindName('EditorText').Text=$mixed.Tag.OriginalEditorText
+                $mixed.Close()
+                if([IO.File]::ReadAllText($path) -cne "one`ntwo`n"){throw 'Unsaved editing changed disk.'}
+                foreach($name in 'TextMerge'){
+                    $reader=[Xml.XmlReader]::Create((Join-Path $Repo "src/PowerCompare.UI/$name.xaml"));try{$view=[Windows.Markup.XamlReader]::Load($reader)}finally{$reader.Dispose()};$view.Close()
+                }
+                'Edited'
+            }).AddArgument($repo).AddArgument($TestDrive)
+            $out=$ps.Invoke();if($ps.Streams.Error.Count){throw($ps.Streams.Error | Out-String)};$out | Should -Contain 'Edited'
+        } finally {$ps.Dispose();$runspace.Dispose()}
+    }
+}

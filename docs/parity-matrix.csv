@@ -26,24 +26,24 @@ TEXT-06,Text,Encodings,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundat
 TEXT-07,Text,Overview,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
 TEXT-08,Text,Conversions,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
 TEXT-09,Text,Clipboard,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
-TEXT-10,Text,Backups,Partial,docs/superpowers/plans/2026-10-09-text-merge.md,,,Foundation implements a subset; full capability remains open
-TEXT-11,Text,Editing/recomparison,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-10,Text,Backups,Implemented,docs/superpowers/plans/2026-10-09-text-merge.md,tests/Core/TextEditing.Tests.ps1,PR #3 CI; interactive acceptance open,Atomic saves retain exact original bytes in adjacent backups; interactive acceptance open
+TEXT-11,Text,Editing/recomparison,Implemented,docs/superpowers/plans/2026-10-09-text-merge.md,tests/UI/TextEditor.Tests.ps1,PR #3 CI; interactive acceptance open,WPF editor; undo/redo and background recomparison; Windows execution pending
 TEXT-12,Text,Syntax coloring,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
-TEXT-13,Text,Significance rules,Partial,docs/superpowers/plans/2026-10-09-text-merge.md,,,Foundation implements a subset; full capability remains open
+TEXT-13,Text,Significance rules,Partial,docs/superpowers/plans/2026-10-09-text-merge.md,tests/UI/TextEditor.Tests.ps1,PR #3 CI; interactive acceptance open,Case and whitespace significance controls; custom rules remain open
 TEXT-14,Text,Replacement rules,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
 TEXT-15,Text,Alignment modes,Partial,docs/superpowers/plans/2026-10-09-text-merge.md,,,Foundation implements a subset; full capability remains open
 TEXT-16,Text,Manual alignment,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
 TEXT-17,Text,Two-way merge,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
-TEXT-18,Text,Three-way merge,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
-TEXT-19,Text,Conflict resolution,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
-TEXT-20,Text,Find/replace,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-18,Text,Three-way merge,Implemented,docs/superpowers/plans/2026-10-09-text-merge.md,tests/Core/TextMerge.Tests.ps1,PR #3 CI; interactive acceptance open,Bounded exact line-token merge; large-input handling remains limited
+TEXT-19,Text,Conflict resolution,Implemented,docs/superpowers/plans/2026-10-09-text-merge.md,tests/Core/TextMerge.Tests.ps1,PR #3 CI; interactive acceptance open,Explicit Left/Right/Base/Both choices; unresolved output cannot be saved
+TEXT-20,Text,Find/replace,Partial,docs/superpowers/plans/2026-10-09-text-merge.md,tests/UI/TextEditor.Tests.ps1,PR #3 CI; interactive acceptance open,Literal find/replace with case choice; advanced search remains open
 TEXT-21,Text,Document conversion,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
 TEXT-22,Text,HTML rendering,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
 TEXT-23,Text,Delphi conversion,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
 TEXT-24,Text,Character/hex details,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
 TEXT-25,Text,Cross-format comparison,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
 TEXT-26,Text,Bookmarks,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
-TEXT-27,Text,Wrapping,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-27,Text,Wrapping,Implemented,docs/superpowers/plans/2026-10-09-text-merge.md,tests/UI/Wpf.Smoke.Tests.ps1,PR #3 CI; interactive acceptance open,WPF wrapping toggle; interactive acceptance open
 TABLES-01,Tables,Grid,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
 TABLES-02,Tables,CSV/TSV/HTML/XLSX,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
 TABLES-03,Tables,Numeric/date tolerances,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline

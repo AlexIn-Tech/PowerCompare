@@ -1,6 +1,6 @@
 # Development preview validation
 
-Validated on 2026-10-09 using PowerShell 7.4.13 on Debian Linux, Pester 5.7.1, and PSScriptAnalyzer 1.24.0.
+Foundation snapshot validated on 2026-10-09 using PowerShell 7.4.13 on Debian Linux, Pester 5.7.1, and PSScriptAnalyzer 1.24.0.
 
 - `scripts/Test.ps1 -Coverage`: 92 passed, 0 failed, 2 Windows-only skips.
 - Core command coverage: 92.78%, 748 analyzed commands across five engine files. This is command coverage, not a guarantee of correctness.
@@ -32,3 +32,9 @@ This implementation is a development preview of the approved WPF foundation plus
 - Foundation adapters use built-in .NET. Optional external protocol/format adapters remain a separate policy decision; no dependency is silently installed by the app.
 - Genuine Windows validation stays explicit; Linux or XML-only evidence cannot establish WPF readiness.
 - Newline-navigation finding was regraded Important because otherwise actual file differences cannot be located in the comparison view; it is fixed rather than deferred.
+
+## Text editing and merge delivery
+
+The next delivery adds encoding-preserving guarded text saves, a WPF editor with undo/redo and background recomparison, and exact three-way merge with explicit conflict resolution. The updated Pester suite covers encoding/BOM/newline round trips, identity checks for all merge inputs, direct-write locking, concurrent namespace replacement recovery, Unicode dirty tracking, mixed merge delimiter policy, and consistent encoded-byte limits. Windows STA checks exercise loading, edit/undo/redo, wrapping and the mixed-output save policy.
+
+Current supported-runtime results are attached to [PR #3](https://github.com/AlexIn-Tech/PowerCompare/pull/3). CI is an automated gate; interactive confirmation dialogs, larger-tree cancellation and high-DPI behavior remain open acceptance checks. Namespace replacement races retain recoverable bytes and reject the save. These filesystem operations do not provide a transaction across files or protection against noncooperating native processes on Unix; the desktop application targets Windows.

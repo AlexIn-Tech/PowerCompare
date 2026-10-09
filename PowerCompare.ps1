@@ -25,6 +25,8 @@ if ([Threading.Thread]::CurrentThread.ApartmentState -ne 'STA') {
 }
 . (Join-Path $PSScriptRoot 'src/PowerCompare.UI/Workers.ps1')
 . (Join-Path $PSScriptRoot 'src/PowerCompare.UI/Controller.ps1')
+. (Join-Path $PSScriptRoot 'src/PowerCompare.UI/TextEditor.ps1')
+. (Join-Path $PSScriptRoot 'src/PowerCompare.UI/TextMerge.ps1')
 . (Join-Path $PSScriptRoot 'src/PowerCompare.UI/TextView.ps1')
 . (Join-Path $PSScriptRoot 'src/PowerCompare.UI/Operations.ps1')
 . (Join-Path $PSScriptRoot 'src/PowerCompare.UI/Application.ps1')

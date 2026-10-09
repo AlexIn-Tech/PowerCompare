@@ -1,0 +1,31 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Text editor — PowerCompare" Width="1100" Height="750" MinWidth="700" MinHeight="450" WindowStartupLocation="CenterOwner">
+  <DockPanel Margin="16">
+    <StackPanel DockPanel.Dock="Top">
+      <TextBlock x:Name="EditorPath" FontWeight="SemiBold" TextWrapping="Wrap"/>
+      <WrapPanel Margin="0,10,0,8">
+        <Button x:Name="SaveEdit" Content="Save with backup" Padding="10,5" Margin="0,0,8,0" IsEnabled="False"/>
+        <Button x:Name="UndoEdit" Content="Undo" Padding="10,5" Margin="0,0,8,0"/>
+        <Button x:Name="RedoEdit" Content="Redo" Padding="10,5" Margin="0,0,8,0"/>
+        <CheckBox x:Name="WrapEdit" Content="Wrap lines" VerticalAlignment="Center" Margin="0,0,12,0"/>
+        <TextBlock Text="Save line endings:" VerticalAlignment="Center" Margin="0,0,6,0"/>
+        <ComboBox x:Name="SaveNewline" Width="110" SelectedIndex="0"><ComboBoxItem Content="Preserve"/><ComboBoxItem Content="LF"/><ComboBoxItem Content="CRLF"/><ComboBoxItem Content="CR"/></ComboBox>
+      </WrapPanel>
+      <WrapPanel Margin="0,0,0,8">
+        <TextBox x:Name="SearchText" Width="180" Margin="0,0,8,0" ToolTip="Literal search"/>
+        <Button x:Name="FindText" Content="Find next" Padding="10,4" Margin="0,0,8,0"/>
+        <TextBox x:Name="ReplacementText" Width="180" Margin="0,0,8,0" ToolTip="Replacement text"/>
+        <Button x:Name="ReplaceText" Content="Replace all" Padding="10,4" Margin="0,0,8,0"/>
+        <CheckBox x:Name="SearchIgnoreCase" Content="Ignore case" VerticalAlignment="Center"/>
+      </WrapPanel>
+      <WrapPanel Margin="0,0,0,8"><TextBlock Text="Comparison significance:" Margin="0,0,8,0"/><CheckBox x:Name="CompareIgnoreCase" Content="Ignore case" Margin="0,0,12,0"/><CheckBox x:Name="CompareIgnoreWhitespace" Content="Ignore whitespace"/></WrapPanel>
+      <TextBlock x:Name="EditorStatus" Text="Loading text…" TextWrapping="Wrap" Margin="0,0,0,8"/>
+    </StackPanel>
+    <Grid><Grid.RowDefinitions><RowDefinition Height="3*"/><RowDefinition Height="5"/><RowDefinition Height="2*"/></Grid.RowDefinitions>
+      <TextBox x:Name="EditorText" IsEnabled="False" AcceptsReturn="True" AcceptsTab="True" IsUndoEnabled="True" UndoLimit="100" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" FontSize="14"/>
+      <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="5"/>
+      <DataGrid x:Name="EditorComparison" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" EnableRowVirtualization="True">
+        <DataGrid.Columns><DataGridTextColumn Header="Left / original" Binding="{Binding LeftText}" Width="*"/><DataGridTextColumn Header="Result" Binding="{Binding Status}" Width="90"/><DataGridTextColumn Header="Edited" Binding="{Binding RightText}" Width="*"/></DataGrid.Columns>
+      </DataGrid>
+    </Grid>
+  </DockPanel>
+</Window>

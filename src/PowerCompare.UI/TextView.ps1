@@ -53,6 +53,24 @@ function Show-PCTextComparison {
             if ($index -ge 0) { $grid.SelectedIndex=$index; $grid.ScrollIntoView($grid.SelectedItem) }
         }.GetNewClosure())
     }
+    foreach($side in 'Left','Right') {
+        $window.FindName("Edit${side}Text").Add_Click({
+            try {
+                $path=if($side -eq 'Left'){$LeftPath}else{$RightPath}
+                $peerPath=if($side -eq 'Left'){$RightPath}else{$LeftPath}
+                $peer=Get-PCTextDocument $peerPath
+                if($peer.Kind -ne 'Text'){throw 'Peer text is unavailable.'}
+                Show-PCTextEditor -Path $path -PeerText $peer.Text -Owner $window
+                $summary.Text='Editor closed. Reopen text comparison to refresh saved changes.'
+            }catch{$summary.Text=$_.Exception.Message}
+        }.GetNewClosure())
+    }
+    $window.FindName('MergeText').Add_Click({
+        $dialog=[Microsoft.Win32.OpenFileDialog]::new();$dialog.Title='Choose the common base file for three-way merge'
+        if($dialog.ShowDialog($window)){
+            try{Show-PCTextMerge -BasePath $dialog.FileName -LeftPath $LeftPath -RightPath $RightPath -Owner $window}catch{$summary.Text=$_.Exception.Message}
+        }
+    }.GetNewClosure())
     $window.FindName('CancelText').Add_Click({ if ($viewState.Worker) { Stop-PCComparisonWorker $viewState.Worker } }.GetNewClosure())
     $timer=[Windows.Threading.DispatcherTimer]::new(); $timer.Interval=[timespan]::FromMilliseconds(100)
     $timer.Add_Tick({

@@ -62,3 +62,9 @@
 ## Execution readiness
 
 This subsystem plan preserves scope and contracts. Before its first task, refine each acceptance family into exact fixtures, format/protocol versions and UI command behavior; resolve optional adapter policy for affected work. It is not an implementation or parity claim.
+
+## Current execution refinement
+
+The first delivery uses strict UTF-8/16/32 encodings (both endian variants), preserves BOM and exact supplied text unless LF/CRLF/CR normalization is explicitly selected, and exposes a coherent read session carrying a content identity. Save plans are read-only, validate identities before staging and replacement, retain exact-original backups, support WhatIf/cancellation, and reject links and alternate streams. Editor undo/redo, literal search/replace, wrapping, significance switches and debounced recomparison use the existing WPF/runspace architecture. Mixed-line-ending documents require an explicit normalization choice in the editor.
+
+Exact three-way merge uses bounded line-token alignment retaining delimiters. Fixtures cover independent edits, identical overlapping edits, conflicting replacements, deletion/modification, repeated lines, same-boundary insertions, empty input, final delimiters and cancellation. Unresolved conflicts do not produce a saveable output. Explicit Left/Right/Base/Both choices resolve individual conflicts; a WPF merge dialog previews output before an identity-guarded save. Syntax adapters, manual alignment, bookmark persistence, patch ingestion and document conversion remain separately tracked follow-up work rather than implied complete.

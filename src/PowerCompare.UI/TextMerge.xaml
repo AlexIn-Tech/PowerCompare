@@ -1,0 +1,13 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Three-way merge — PowerCompare" Width="1200" Height="760" MinWidth="800" MinHeight="450" WindowStartupLocation="CenterOwner">
+  <DockPanel Margin="16">
+    <StackPanel DockPanel.Dock="Top"><TextBlock x:Name="MergePaths" TextWrapping="Wrap" FontWeight="SemiBold"/><TextBlock x:Name="MergeStatus" Text="Computing exact merge…" Margin="0,8" TextWrapping="Wrap"/><TextBlock Text="Choose an outcome for every conflict. Both concatenates left then right exactly, without adding separators." TextWrapping="Wrap"/></StackPanel>
+    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0"><Button x:Name="PreviewMerge" Content="Preview resolution" Padding="12,6" Margin="0,0,8,0" IsEnabled="False"/><Button x:Name="EditMergeOutput" Content="Edit / save to right file…" Padding="12,6" IsEnabled="False"/></StackPanel>
+    <Grid><Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="5"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+      <DataGrid x:Name="MergeConflicts" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" EnableRowVirtualization="True">
+        <DataGrid.Columns><DataGridTextColumn Header="Conflict" Binding="{Binding Id}" IsReadOnly="True" Width="95"/><DataGridTextColumn Header="Base" Binding="{Binding BaseText}" IsReadOnly="True" Width="*"/><DataGridTextColumn Header="Left" Binding="{Binding LeftText}" IsReadOnly="True" Width="*"/><DataGridTextColumn Header="Right" Binding="{Binding RightText}" IsReadOnly="True" Width="*"/><DataGridTemplateColumn Header="Choice" Width="110"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox SelectedValue="{Binding Choice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content"><ComboBoxItem Content="Unresolved"/><ComboBoxItem Content="Left"/><ComboBoxItem Content="Right"/><ComboBoxItem Content="Base"/><ComboBoxItem Content="Both"/></ComboBox></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn></DataGrid.Columns>
+      </DataGrid>
+      <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"/>
+      <TextBox x:Name="MergeOutput" Grid.Row="2" IsReadOnly="True" AcceptsReturn="True" FontFamily="Consolas" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+    </Grid>
+  </DockPanel>
+</Window>
