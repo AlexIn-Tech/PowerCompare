@@ -2,6 +2,8 @@
 
 PowerCompare is being refactored into a Windows WPF comparison application with all application logic in PowerShell. The original single-file WinForms prototype has been replaced by a reusable UI and independently testable engine.
 
+![PowerCompare screenshot](img/Screenshot%202026-10-09%20150901.png)
+
 **Current status: development preview.** PowerCompare is an independent PowerShell application for comparing files and folders. Implemented capabilities and planned improvements are tracked in [the feature roadmap](docs/parity-matrix.csv).
 
 ## Implemented in this branch
