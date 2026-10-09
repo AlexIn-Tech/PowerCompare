@@ -105,7 +105,11 @@ function Compare-PCText {
             $CancellationToken.ThrowIfCancellationRequested()
             for ($j = $m - 1; $j -ge 0; $j--) {
                 if ($comparer.Equals($lkeys[$i], $rkeys[$j])) { $table[$i, $j] = 1 + $table[($i + 1), ($j + 1)] }
-                else { $table[$i, $j] = [Math]::Max($table[($i + 1), $j], $table[$i, ($j + 1)]) }
+                else {
+                    $down=$table[($i + 1), $j]
+                    $across=$table[$i, ($j + 1)]
+                    $table[$i, $j] = [Math]::Max($down, $across)
+                }
             }
         }
         $i = 0; $j = 0
