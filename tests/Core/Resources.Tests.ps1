@@ -46,4 +46,39 @@ Describe 'Local resources' {
         $entries.RelativePath | Should -Not -Contain 'link/secret'
         { Open-PCResourceRead -Uri ([uri](Join-Path $root 'link/secret')) } | Should -Throw '*link*'
     }
+    It 'reports Windows junctions without traversing them and rejects junction roots' {
+        if ([Environment]::OSVersion.Platform -ne 'Win32NT') { Set-ItResult -Skipped -Because 'Junctions require Windows'; return }
+        $target = Join-Path $TestDrive 'junction-target'; [void][IO.Directory]::CreateDirectory($target)
+        [IO.File]::WriteAllText((Join-Path $target 'secret'), 'x')
+        $junction = Join-Path $root 'junction'
+        New-Item -ItemType Junction -Path $junction -Target $target -ErrorAction Stop | Out-Null
+        $entries = @(Get-PCResourceEntries -Uri ([uri]$root))
+        ($entries | Where-Object RelativePath -EQ 'junction').EntryType | Should -Be 'Link'
+        $entries.RelativePath | Should -Not -Contain 'junction/secret'
+        { Get-PCResourceEntries -Uri ([uri]$junction) } | Should -Throw '*junction*'
+        { Open-PCResourceRead -Uri ([uri](Join-Path $junction 'secret')) } | Should -Throw '*junction*'
+    }
+}
+
+Describe 'Reparse point classification' {
+    It 'allows cloud reparse points that do not redirect paths' {
+        InModuleScope PowerCompare.Core {
+            $item = [pscustomobject]@{ Attributes = [IO.FileAttributes]'Directory, ReparsePoint'; LinkType = $null }
+            Test-PCLink -Item $item | Should -BeFalse
+        }
+    }
+    It 'identifies symbolic links and junctions as links' {
+        InModuleScope PowerCompare.Core {
+            foreach ($type in 'SymbolicLink','Junction') {
+                $item = [pscustomobject]@{ Attributes = [IO.FileAttributes]'Directory, ReparsePoint'; LinkType = $type }
+                Test-PCLink -Item $item | Should -BeTrue
+            }
+        }
+    }
+    It 'accepts a configured real cloud folder as a comparison root' {
+        InModuleScope PowerCompare.Core {
+            if (-not $env:PC_CLOUD_TEST_ROOT) { Set-ItResult -Skipped -Because 'Set PC_CLOUD_TEST_ROOT to test an existing cloud folder'; return }
+            Get-PCValidatedRoot -Path $env:PC_CLOUD_TEST_ROOT | Should -Be ([IO.Path]::GetFullPath($env:PC_CLOUD_TEST_ROOT))
+        }
+    }
 }

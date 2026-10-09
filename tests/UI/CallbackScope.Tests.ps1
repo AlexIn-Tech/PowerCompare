@@ -1,5 +1,10 @@
 ﻿BeforeAll { $uiModule=Join-Path $PSScriptRoot '../../src/PowerCompare.UI/PowerCompare.UI.psm1' }
 Describe 'Launcher callback command visibility' {
+    It 'imports the UI commands without unapproved-verb warnings' {
+        $warnings = @()
+        Import-Module $uiModule -Force -WarningVariable warnings
+        @($warnings).Count | Should -Be 0
+    }
     It 'resolves UI and engine commands from closures after a script-scoped load' {
         $callback=& {
             param($Module)

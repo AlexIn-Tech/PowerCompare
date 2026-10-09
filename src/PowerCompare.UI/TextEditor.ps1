@@ -31,7 +31,7 @@ function Find-PCTextMatch {
     if($index -ge 0){[pscustomobject]@{Start=$index;Length=$Query.Length}}
 }
 
-function Replace-PCTextMatches {
+function Set-PCTextMatches {
     param([AllowEmptyString()][string]$Text,[AllowEmptyString()][string]$Query,[AllowEmptyString()][string]$Replacement,[switch]$IgnoreCase)
     if(-not $Query){return $Text}
     $options=[Text.RegularExpressions.RegexOptions]::CultureInvariant
@@ -83,7 +83,7 @@ function New-PCTextEditorWindow {
         else{$controls.EditorStatus.Text='No matching text.'}
     }.GetNewClosure())
     $controls.ReplaceText.Add_Click({
-        try{$replacement=Replace-PCTextMatches $controls.EditorText.Text $controls.SearchText.Text $controls.ReplacementText.Text -IgnoreCase:([bool]$controls.SearchIgnoreCase.IsChecked);$controls.EditorText.SelectAll();$controls.EditorText.SelectedText=$replacement}catch{$controls.EditorStatus.Text=$_.Exception.Message}
+        try{$replacement=Set-PCTextMatches $controls.EditorText.Text $controls.SearchText.Text $controls.ReplacementText.Text -IgnoreCase:([bool]$controls.SearchIgnoreCase.IsChecked);$controls.EditorText.SelectAll();$controls.EditorText.SelectedText=$replacement}catch{$controls.EditorStatus.Text=$_.Exception.Message}
     }.GetNewClosure())
     $controls.SaveEdit.Add_Click({
         if(-not $state.Session -or $state.Operation -eq 'TextSave'){return}

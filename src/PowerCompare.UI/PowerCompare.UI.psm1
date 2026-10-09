@@ -9,7 +9,7 @@ Export-ModuleMember -Function @(
     'Stop-PCComparisonWorker','Close-PCComparisonWorker','Start-PCComparisonWorker',
     'New-PCWorkspaceState','Invoke-PCCompareRequest','Update-PCWorkspace','Close-PCWorkspace',
     'Test-PCTextEditorDirty','Get-PCEditorNewlineStyle','ConvertTo-PCEditorSaveText',
-    'Find-PCTextMatch','Replace-PCTextMatches','New-PCTextEditorWindow','Show-PCTextEditor',
+    'Find-PCTextMatch','Set-PCTextMatches','New-PCTextEditorWindow','Show-PCTextEditor',
     'Show-PCTextMerge','Get-PCNextDifferenceIndex','Get-PCEligibleCopyPaths',
     'ConvertTo-PCTextDisplayRows','Show-PCTextComparison','New-PCFileOperationState',
     'Start-PCFileOperationRequest','Update-PCFileOperationState','Show-PCCopyPreview',

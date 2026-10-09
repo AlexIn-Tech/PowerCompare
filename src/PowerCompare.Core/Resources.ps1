@@ -9,12 +9,21 @@
     [IO.Path]::GetFullPath($Uri.LocalPath)
 }
 
+function Test-PCLink {
+    param([Parameter(Mandatory)][object]$Item)
+    # Cloud placeholders also use ReparsePoint, but do not redirect the path.
+    # PowerShell's filesystem LinkType distinguishes symlinks and mount points.
+    ($Item.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0 -and
+        $Item.LinkType -in @('SymbolicLink', 'Junction')
+}
+
 function Assert-PCNoLink {
     param([Parameter(Mandatory)][string]$Path)
     $current = [IO.Path]::GetFullPath($Path)
     while ($current) {
         if ([IO.File]::Exists($current) -or [IO.Directory]::Exists($current)) {
-            if (([IO.File]::GetAttributes($current) -band [IO.FileAttributes]::ReparsePoint) -ne 0) {
+            if (([IO.File]::GetAttributes($current) -band [IO.FileAttributes]::ReparsePoint) -ne 0 -and
+                (Test-PCLink -Item (Get-Item -LiteralPath $current -Force -ErrorAction Stop))) {
                 throw [IO.IOException]::new("Symbolic link or junction is not allowed: $current")
             }
         }
@@ -76,7 +85,7 @@ function Get-PCResourceEntries {
             $relative = $item.FullName.Substring($prefix.Length).Replace('\', '/')
             try {
                 $item.Refresh()
-                $isLink = ($item.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0
+                $isLink = Test-PCLink -Item $item
                 $isDirectory = ($item.Attributes -band [IO.FileAttributes]::Directory) -ne 0
                 $type = if ($isLink) { 'Link' } elseif ($isDirectory) { 'Directory' } else { 'File' }
                 $length = if ($type -eq 'File') { $item.Length } else { $null }

@@ -17,8 +17,8 @@ Describe 'Text editor behavior' {
         Find-PCTextMatch 'abc' '' | Should -BeNullOrEmpty
     }
     It 'replaces literal matches without treating replacement text as regex syntax' {
-        Replace-PCTextMatches 'a.* A.*' 'a.*' '$1' -IgnoreCase | Should -Be '$1 $1'
-        Replace-PCTextMatches 'abc' '' 'x' | Should -Be 'abc'
+        Set-PCTextMatches 'a.* A.*' 'a.*' '$1' -IgnoreCase | Should -Be '$1 $1'
+        Set-PCTextMatches 'abc' '' 'x' | Should -Be 'abc'
     }
     It 'runs buffer comparison, editor load, merge and save through workers' {
         $l=Join-Path $TestDrive 'l.txt';$r=Join-Path $TestDrive 'r.txt';$b=Join-Path $TestDrive 'b.txt'

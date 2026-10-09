@@ -61,7 +61,7 @@ Invoke-PCCopyPlan $plan -Confirm
 
 ## Limits and recovery
 
-- Links and junctions are reported without traversal; copy roots must not overlap. Copy operations are for local files.
+- Links and junctions are reported without traversal; copy roots must not overlap. OneDrive/cloud placeholder reparse points are supported as local files and folders, subject to provider availability. Copy operations are for local files.
 - Text previews default to 2 MiB per file and 20,000 lines. Exact alignment is bounded to 4,000,000 cells; the viewer explicitly labels coarse fallback alignment. Binary and malformed Unicode data are not silently decoded. The viewer does not edit files yet.
 - Files changed after preview invalidate the relevant copy operation. A failed file does not abandon other valid files. Cancellation preserves already completed copies and removes staged files where possible; review each result.
 - Overwritten files are backed up beside their destination with a `.powercompare-backup-<id>` suffix. Retain or remove backups deliberately after verifying results. Session/report overwrites also retain backups.
@@ -69,15 +69,17 @@ Invoke-PCCopyPlan $plan -Confirm
 
 ## Development and verification
 
-Development dependencies are Pester 5.7.1 and PSScriptAnalyzer 1.24.0. The launcher does not install or load them.
+Development dependencies are Pester 5.7.1 and PSScriptAnalyzer 1.24.0. The launcher does not install or load them. `Validate.ps1` also discovers repository-local copies under the ignored `TestResults/modules` directory.
 
 ```powershell
 .\scripts\Install-DevDependencies.ps1
-.\scripts\Test.ps1 -Coverage
-Invoke-ScriptAnalyzer -Path .\src -Recurse -Severity Error
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Validate.ps1
+pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\Validate.ps1
 ```
 
-Pester behavior tests are written and observed failing before implementation, then rerun green. Tests use temporary files for comparison/copy behavior and subprocesses to verify runner exit codes. Windows CI runs Windows PowerShell 5.1 and PowerShell 7, publishes test/coverage artifacts, and checks analyzer errors. Unsupported test prerequisites are reported as skipped.
+All validation runs locally. `Validate.ps1` runs the full Pester suite with coverage and checks analyzer errors using the selected runtime. It returns nonzero on failure and saves test, coverage, and analyzer reports under `TestResults/PowerShell-5` or `TestResults/PowerShell-7`. Unsupported test prerequisites are reported as skipped. For focused tests, use `scripts/Test.ps1 -Path <test-file>`.
+
+To include a read-only check of an existing OneDrive/cloud comparison root, set `$env:PC_CLOUD_TEST_ROOT` to its path before validation. The test does not modify that folder.
 
 See [the design](docs/superpowers/specs/2026-10-09-powercompare-design.md) and [the foundation plan](docs/superpowers/plans/2026-10-09-wpf-foundation.md).
 
@@ -91,4 +93,4 @@ Open a file present on both sides with **Open text**, then choose **Edit left** 
 
 Choose **Three-way merge** and select the common base file. Independent changes merge automatically. Resolve every conflict with Left, Right, Base or Both, then preview the result and open the editor to save to the right file. Both concatenates left then right exactly. Saving revalidates all input identities. Exact alignment has a four-million-cell limit; larger merges fail explicitly rather than approximating conflict decisions. Advanced search, syntax coloring, manual alignment, bookmarks, patch input and format conversions remain open.
 
-GitHub Actions validation is manual-only to control runner costs. Choose one PowerShell runtime per run; use local Pester and analyzer checks during development. The workflow has a 15-minute timeout and cancels overlapping runs on the same branch. Repository workflow execution is currently disabled and should only be enabled when a paid run is explicitly wanted.
+The GitHub Actions workflow has been removed to avoid hosted runner costs.
