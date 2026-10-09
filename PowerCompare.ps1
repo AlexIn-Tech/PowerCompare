@@ -23,11 +23,5 @@ if ([Threading.Thread]::CurrentThread.ApartmentState -ne 'STA') {
     & $engine @launchArgs
     exit $LASTEXITCODE
 }
-. (Join-Path $PSScriptRoot 'src/PowerCompare.UI/Workers.ps1')
-. (Join-Path $PSScriptRoot 'src/PowerCompare.UI/Controller.ps1')
-. (Join-Path $PSScriptRoot 'src/PowerCompare.UI/TextEditor.ps1')
-. (Join-Path $PSScriptRoot 'src/PowerCompare.UI/TextMerge.ps1')
-. (Join-Path $PSScriptRoot 'src/PowerCompare.UI/TextView.ps1')
-. (Join-Path $PSScriptRoot 'src/PowerCompare.UI/Operations.ps1')
-. (Join-Path $PSScriptRoot 'src/PowerCompare.UI/Application.ps1')
+Import-Module (Join-Path $PSScriptRoot 'src/PowerCompare.UI/PowerCompare.UI.psm1') -Global -Force
 Show-PCMainWindow -LeftPath $LeftPath -RightPath $RightPath -Mode $Mode
