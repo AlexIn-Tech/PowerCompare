@@ -1,0 +1,31 @@
+name: PowerShell validation
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  windows:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shell: [powershell, pwsh]
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned test dependencies
+        run: ./scripts/Install-DevDependencies.ps1
+      - name: Pester tests and coverage
+        run: ./scripts/Test.ps1 -Coverage
+      - name: Static analysis
+        run: |
+          $issues = @(Invoke-ScriptAnalyzer -Path ./src -Recurse -Severity Error)
+          $issues | Format-Table -AutoSize
+          if ($issues.Count) { throw 'Static analysis errors' }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: results-${{ matrix.shell }}
+          path: TestResults/

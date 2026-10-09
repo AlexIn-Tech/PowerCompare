@@ -1,0 +1,118 @@
+Id,Workstream,Capability,Status,Plan,Test,WindowsEvidence,Notes
+WORKSPACE-01,Workspace,Responsiveness,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+WORKSPACE-02,Workspace,Tabs,Partial,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,Foundation implements a subset; full capability remains open
+WORKSPACE-03,Workspace,Shell integration,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+WORKSPACE-04,Workspace,Sessions,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+WORKSPACE-05,Workspace,Autosave,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+WORKSPACE-06,Workspace,Workspaces,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+WORKSPACE-07,Workspace,Home,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+WORKSPACE-08,Workspace,Patch viewer,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+WORKSPACE-09,Workspace,Standalone editor,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+WORKSPACE-10,Workspace,Automation,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+WORKSPACE-11,Workspace,CLI,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+WORKSPACE-12,Workspace,DPI,Partial,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,Foundation implements a subset; full capability remains open
+WORKSPACE-13,Workspace,Updates,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+WORKSPACE-14,Workspace,Drag/drop,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+WORKSPACE-15,Workspace,Customization,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+WORKSPACE-16,Workspace,Help,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+WORKSPACE-17,Workspace,Dark theme,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+WORKSPACE-18,Workspace,Windows context menu,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+TEXT-01,Text,Side-by-side,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+TEXT-02,Text,Inline highlighting,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+TEXT-03,Text,Difference filters,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-04,Text,Navigation,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+TEXT-05,Text,Reports/printing,Partial,docs/superpowers/plans/2026-10-09-text-merge.md,,,Foundation implements a subset; full capability remains open
+TEXT-06,Text,Encodings,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+TEXT-07,Text,Overview,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-08,Text,Conversions,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-09,Text,Clipboard,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-10,Text,Backups,Partial,docs/superpowers/plans/2026-10-09-text-merge.md,,,Foundation implements a subset; full capability remains open
+TEXT-11,Text,Editing/recomparison,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-12,Text,Syntax coloring,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-13,Text,Significance rules,Partial,docs/superpowers/plans/2026-10-09-text-merge.md,,,Foundation implements a subset; full capability remains open
+TEXT-14,Text,Replacement rules,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-15,Text,Alignment modes,Partial,docs/superpowers/plans/2026-10-09-text-merge.md,,,Foundation implements a subset; full capability remains open
+TEXT-16,Text,Manual alignment,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-17,Text,Two-way merge,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-18,Text,Three-way merge,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-19,Text,Conflict resolution,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-20,Text,Find/replace,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-21,Text,Document conversion,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-22,Text,HTML rendering,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-23,Text,Delphi conversion,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-24,Text,Character/hex details,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-25,Text,Cross-format comparison,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-26,Text,Bookmarks,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TEXT-27,Text,Wrapping,Planned,docs/superpowers/plans/2026-10-09-text-merge.md,,,BC5 Pro Windows baseline
+TABLES-01,Tables,Grid,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+TABLES-02,Tables,CSV/TSV/HTML/XLSX,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+TABLES-03,Tables,Numeric/date tolerances,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+TABLES-04,Tables,Column significance,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+TABLES-05,Tables,Key alignment,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+TABLES-06,Tables,Column mapping,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+TABLES-07,Tables,Sorting,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+TABLES-08,Tables,Multiple sheets/tables,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+BINARY-01,Binary,Hex view,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+BINARY-02,Binary,Editing,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+BINARY-03,Binary,Byte alignment,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+BINARY-04,Binary,Difference filtering,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+BINARY-05,Binary,Wrapping,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+BINARY-06,Binary,Find/replace,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+REGISTRY-01,Registry,Local/remote hives,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+REGISTRY-02,Registry,REG exports,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+REGISTRY-03,Registry,Editing,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+REGISTRY-04,Registry,Recursive keys,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+IMAGES-01,Images,Format decoding,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+IMAGES-02,Images,Transforms,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+IMAGES-03,Images,Difference modes,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+IMAGES-04,Images,Pixel inspection,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+IMAGES-05,Images,RGB tolerance,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+IMAGES-06,Images,Color substitution,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+IMAGES-07,Images,Zoom,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+METADATA-01,Metadata,Executable versions,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+METADATA-02,Metadata,Audio/video tags,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+METADATA-03,Metadata,External handlers,Planned,docs/superpowers/plans/2026-10-09-specialized-views.md,,,BC5 Pro Windows baseline
+FOLDERS-01,Folders,Side-by-side trees,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-02,Folders,Status colors,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+FOLDERS-03,Folders,Recursion,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+FOLDERS-04,Folders,Status filters,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+FOLDERS-05,Folders,Metadata criteria,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+FOLDERS-06,Folders,Content criteria,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+FOLDERS-07,Folders,Ignore selection,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-08,Folders,Name filters,Implemented,docs/superpowers/plans/2026-10-09-wpf-foundation.md,tests/,Pending CI,Host tests passed; acceptance requires Windows evidence
+FOLDERS-09,Folders,Size/date filters,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-10,Folders,Content/attribute filters,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-11,Folders,Synchronization,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-12,Folders,Copy/move/delete/rename,Partial,docs/superpowers/plans/2026-10-09-folder-sync.md,,,Foundation implements a subset; full capability remains open
+FOLDERS-13,Folders,Metadata changes,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-14,Folders,Concurrent operations,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-15,Folders,Pause/resume,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-16,Folders,Two-way merge,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-17,Folders,Three-way merge,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-18,Folders,Automatic text merge,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-19,Folders,Flat matching,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-20,Folders,Linked reports,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-21,Folders,Link traversal policy,Partial,docs/superpowers/plans/2026-10-09-folder-sync.md,,,Foundation implements a subset; full capability remains open
+FOLDERS-22,Folders,Extension alignment,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-23,Folders,Mask alignment,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-24,Folders,Unicode normalization,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+FOLDERS-25,Folders,ACL/short-name handling,Planned,docs/superpowers/plans/2026-10-09-folder-sync.md,,,BC5 Pro Windows baseline
+PROVIDERS-01,Providers,Local/SMB,Partial,docs/superpowers/plans/2026-10-09-providers-archives.md,,,Foundation implements a subset; full capability remains open
+PROVIDERS-02,Providers,FTP profiles,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+PROVIDERS-03,Providers,Concurrent connections,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+PROVIDERS-04,Providers,Resumable transfers,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+PROVIDERS-05,Providers,FTPS/SFTP,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+PROVIDERS-06,Providers,Authentication methods,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+PROVIDERS-07,Providers,WebDAV,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+PROVIDERS-08,Providers,S3,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+PROVIDERS-09,Providers,Dropbox,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+PROVIDERS-10,Providers,OneDrive,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+PROVIDERS-11,Providers,Subversion,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+PROVIDERS-12,Providers,Portable devices,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+ARCHIVES-01,Archives,Tree comparison,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+ARCHIVES-02,Archives,Archive editing,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+ARCHIVES-03,Archives,Nested navigation,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+ARCHIVES-04,Archives,Snapshots,Planned,docs/superpowers/plans/2026-10-09-providers-archives.md,,,BC5 Pro Windows baseline
+INTEGRATION-01,Integration,VCS launch hooks,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+INTEGRATION-02,Integration,MSSCCI,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline
+INTEGRATION-03,Integration,Repository comparison,Planned,docs/superpowers/plans/2026-10-09-workspace-integration.md,,,BC5 Pro Windows baseline

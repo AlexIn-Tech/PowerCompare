@@ -1,0 +1,20 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Review copy plan — PowerCompare" Width="1000" Height="600" MinWidth="700" MinHeight="350" FontFamily="Segoe UI" WindowStartupLocation="CenterOwner">
+  <DockPanel Margin="20">
+    <StackPanel DockPanel.Dock="Top" Margin="0,0,0,16">
+      <TextBlock Text="Review every destination before copying" FontSize="22" FontWeight="SemiBold"/>
+      <TextBlock Text="Overwritten files receive a backup beside the destination. Changed inputs invalidate the operation." TextWrapping="Wrap" Margin="0,10,0,0"/>
+    </StackPanel>
+    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+      <Button x:Name="CancelCopy" Content="Cancel" IsCancel="True" Padding="18,8" Margin="0,0,10,0"/>
+      <Button x:Name="ConfirmCopy" Content="Execute this copy plan" Padding="18,8" Background="#245DB5" Foreground="White"/>
+    </StackPanel>
+    <DataGrid x:Name="PlanRows" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Action" Binding="{Binding Action}" Width="100"/>
+        <DataGridTextColumn Header="Source" Binding="{Binding SourcePath}" Width="*"/>
+        <DataGridTextColumn Header="Destination" Binding="{Binding DestinationPath}" Width="*"/>
+      </DataGrid.Columns>
+    </DataGrid>
+  </DockPanel>
+</Window>
