@@ -13,8 +13,14 @@ Describe 'Application launcher' {
         $rows[0].Status | Should -Be 'LeftOnly'
     }
     It 'fails explicitly for missing comparison roots' {
-        & $engine -NoProfile -File $launcher -NoGui -LeftPath (Join-Path $TestDrive 'missing') -RightPath $TestDrive *> $null
-        $LASTEXITCODE | Should -Not -Be 0
+        $previousPreference = $ErrorActionPreference
+        try {
+            # Windows PowerShell wraps native stderr as ErrorRecord objects.
+            $ErrorActionPreference = 'Continue'
+            & $engine -NoProfile -File $launcher -NoGui -LeftPath (Join-Path $TestDrive 'missing') -RightPath $TestDrive *> $null
+            $exitCode = $LASTEXITCODE
+        } finally { $ErrorActionPreference = $previousPreference }
+        $exitCode | Should -Not -Be 0
     }
     It 'explains the Windows requirement on non-Windows hosts' {
         if ([Environment]::OSVersion.Platform -eq 'Win32NT') { Set-ItResult -Skipped -Because 'Non-Windows platform check'; return }

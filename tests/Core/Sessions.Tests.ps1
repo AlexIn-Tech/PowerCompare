@@ -23,7 +23,7 @@ Describe 'Sessions and comparison reports' {
     It 'exports valid JSON arrays for zero and one comparison rows' {
         $path=Join-Path $TestDrive 'report.json'
         Export-PCComparisonReport -Rows @() -Path $path -Format Json
-        [IO.File]::ReadAllText($path).Trim() | Should -Be '[]'
+        ([IO.File]::ReadAllText($path) -replace '\s', '') | Should -Be '[]'
         Export-PCComparisonReport -Rows @([pscustomobject]@{RelativePath='a';Status='Different'}) -Path $path -Format Json
         $decoded=@(Get-Content -LiteralPath $path -Raw | ConvertFrom-Json)
         $decoded.Count | Should -Be 1; $decoded[0].Status | Should -Be 'Different'
