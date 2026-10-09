@@ -6,7 +6,7 @@
 function Start-PCOperationWorker {
     [CmdletBinding()]
     param([Parameter(Mandatory)][hashtable]$Request, [Parameter(Mandatory)][long]$Generation,
-        [ValidateSet('Folder','Text','CopyPlan','Copy','Report')][string]$Operation = 'Folder')
+        [ValidateSet('Folder','Text','CopyPlan','Copy','Report','EditLoad','BufferText','Merge','TextSave')][string]$Operation = 'Folder')
     $queue = [Collections.Concurrent.BlockingCollection[object]]::new(64)
     $cts = [Threading.CancellationTokenSource]::new()
     $outcomes = [Collections.Concurrent.ConcurrentQueue[object]]::new()
@@ -18,9 +18,18 @@ function Start-PCOperationWorker {
         try {
             Import-Module $Module -Force -ErrorAction Stop
             $Cancellation.Token.ThrowIfCancellationRequested()
-            if ($Operation -in @('Text', 'CopyPlan','Report')) {
+            if ($Operation -in @('Text', 'CopyPlan','Report','EditLoad','BufferText','Merge')) {
                 $value = switch ($Operation) {
                     'Text' { Compare-PCTextFile @Request -CancellationToken $Cancellation.Token }
+                    'EditLoad' { Get-PCTextEditSession @Request -CancellationToken $Cancellation.Token }
+                    'BufferText' { Compare-PCText @Request -CancellationToken $Cancellation.Token }
+                    'Merge' {
+                        $base=Get-PCTextEditSession $Request.BasePath -CancellationToken $Cancellation.Token
+                        $left=Get-PCTextEditSession $Request.LeftPath -CancellationToken $Cancellation.Token
+                        $right=Get-PCTextEditSession $Request.RightPath -CancellationToken $Cancellation.Token
+                        $model=Merge-PCText $base.Document.Text $left.Document.Text $right.Document.Text -CancellationToken $Cancellation.Token
+                        [pscustomobject]@{Model=$model;BaseSession=$base;LeftSession=$left;RightSession=$right}
+                    }
                     'CopyPlan' { New-PCCopyPlan @Request -CancellationToken $Cancellation.Token }
                     'Report' { Export-PCComparisonReport @Request; $Request.Path }
                 }
@@ -33,11 +42,15 @@ function Start-PCOperationWorker {
             $count = 0
             $clock = [Diagnostics.Stopwatch]::StartNew()
             $producer = {
-                if ($Operation -eq 'Copy') { Invoke-PCCopyPlan @Request -CancellationToken $Cancellation.Token -Confirm:$false }
+                if ($Operation -eq 'TextSave') {
+                    $plan=Get-PCTextEditPlan @Request -CancellationToken $Cancellation.Token
+                    Invoke-PCTextEditPlan $plan -CancellationToken $Cancellation.Token -Confirm:$false
+                }
+                elseif ($Operation -eq 'Copy') { Invoke-PCCopyPlan @Request -CancellationToken $Cancellation.Token -Confirm:$false }
                 else { Compare-PCFolder @Request -CancellationToken $Cancellation.Token }
             }
             & $producer | ForEach-Object {
-                if ($Operation -eq 'Copy') {
+                if ($Operation -in @('Copy','TextSave')) {
                     # Outcomes describe filesystem mutations. Never discard them on cancellation.
                     $Outcomes.Enqueue($_); $count++; return
                 }

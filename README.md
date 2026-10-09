@@ -10,10 +10,12 @@ PowerCompare is being refactored into a Windows WPF comparison application with 
 - Background runspaces, cancellation, reusable virtualized results, and protection against stale worker results.
 - Side-by-side text comparison with line numbers, inserted/deleted/changed lines, inline highlighting, and difference navigation.
 - Selected-file copy in either direction, explicit preview/confirmation, immutable plans, stale-file rejection, streamed staged writes, and overwrite backups.
+- Editable text with undo/redo, literal search/replace, wrapping, significance controls, and background recomparison.
+- Encoding-preserving text saves with backups and stale-edit rejection; bounded three-way merge with explicit conflict choices.
 - Saved local sessions and JSON, CSV, and escaped HTML reports.
 - A headless JSON comparison command and a Pester TDD suite.
 
-Windows CI passes on Windows PowerShell 5.1 and PowerShell 7, including WPF loading and repeated Compare events. Interactive desktop acceptance remains open; see [validation evidence](docs/validation.md). Merge, remote/cloud protocols, archives, specialized viewers, and other planned features are tracked as outstanding.
+The foundation passed Windows CI on Windows PowerShell 5.1 and PowerShell 7, including WPF loading and repeated Compare events. The new editor and merge delivery requires its own Windows CI evidence. Interactive desktop acceptance remains open; see [validation evidence](docs/validation.md). Advanced text features, folder synchronization, remote/cloud protocols, archives, specialized viewers, and other planned features are tracked as outstanding.
 
 ## Run on Windows
 
@@ -80,3 +82,9 @@ See [the design](docs/superpowers/specs/2026-10-09-powercompare-design.md) and [
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Text editing and merge
+
+Open a file present on both sides with **Open text**, then choose **Edit left** or **Edit right**. Saves require confirmation, preserve detected UTF-8/16/32 encoding and BOM, retain an adjacent backup, and reject external file changes. The editable document limit is 2 MiB. Uniform line endings are preserved; mixed line endings require an explicit LF, CRLF or CR choice because the desktop text control normalizes them.
+
+Choose **Three-way merge** and select the common base file. Independent changes merge automatically. Resolve every conflict with Left, Right, Base or Both, then preview the result and open the editor to save to the right file. Both concatenates left then right exactly. Saving revalidates all input identities. Exact alignment has a four-million-cell limit; larger merges fail explicitly rather than approximating conflict decisions. Advanced search, syntax coloring, manual alignment, bookmarks, patch input and format conversions remain open.
